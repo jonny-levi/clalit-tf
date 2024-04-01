@@ -41,7 +41,7 @@ resource "azurerm_subnet" "endpoint" {
 }
 
 resource "azurerm_storage_account" "example" {
-  name                     = "clalit-account"
+  name                     = "clalitaccount"
   resource_group_name      = azurerm_resource_group.clalit-rg.name
   location                 = azurerm_resource_group.clalit-rg.location
   account_tier             = "Standard"
