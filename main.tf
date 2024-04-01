@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "clalit-rg" {
 
 
 # Create a virtual network within the resource group
-resource "azurerm_virtual_network" "example" {
+resource "azurerm_virtual_network" "clalit-vn" {
   name                = "clalit-network"
   resource_group_name = azurerm_resource_group.clalit-rg.name
   location            = azurerm_resource_group.clalit-rg.location
@@ -26,7 +26,7 @@ resource "azurerm_virtual_network" "example" {
 resource "azurerm_subnet" "service" {
   name                                          = "service"
   resource_group_name                           = azurerm_resource_group.clalit-rg.name
-  virtual_network_name                          = azurerm_virtual_network.clalit-rg.name
+  virtual_network_name                          = azurerm_virtual_network.clalit-vn.name
   address_prefixes                              = ["10.0.1.0/24"]
   enforce_private_link_service_network_policies = true
 }
@@ -34,7 +34,7 @@ resource "azurerm_subnet" "service" {
 resource "azurerm_subnet" "endpoint" {
   name                 = "endpoint"
   resource_group_name  = azurerm_resource_group.clalit-rg.name
-  virtual_network_name = azurerm_virtual_network.clalit-rg.name
+  virtual_network_name = azurerm_virtual_network.clalit-vn.name
   address_prefixes     = ["10.0.2.0/24"]
 
   enforce_private_link_endpoint_network_policies = true
