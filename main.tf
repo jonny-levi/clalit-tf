@@ -56,8 +56,8 @@ resource "azurerm_storage_account" "clalit-storage-account" {
 
 resource "azurerm_app_service_plan" "clalit-app-svc-plan" {
   name                = "azure-functions-test-service-plan"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.clalit-rg.location
+  resource_group_name = azurerm_resource_group.clalit-rg.name
 
   sku {
     tier = "Standard"
