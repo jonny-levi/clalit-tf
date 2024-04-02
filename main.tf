@@ -43,9 +43,6 @@ resource "azurerm_subnet" "endpoint" {
 
   enforce_private_link_endpoint_network_policies = true
 }
-
-<<<<<<< HEAD
-=======
 resource "azurerm_public_ip" "example" {
   name                = "example-pip"
   sku                 = "Standard"
@@ -96,7 +93,7 @@ resource "azurerm_private_endpoint" "example" {
   }
 }
 
->>>>>>> 9a964bd (wip)
+
 resource "azurerm_storage_account" "clalit-storage-account" {
   name                     = "clalitaccount"
   resource_group_name      = azurerm_resource_group.clalit-rg.name
@@ -125,8 +122,8 @@ resource "azurerm_function_app" "example" {
   app_service_plan_id        = azurerm_app_service_plan.clalit-app-svc-plan.id
   storage_account_name       = azurerm_storage_account.clalit-storage-account.name
   storage_account_access_key = azurerm_storage_account.clalit-storage-account.primary_access_key
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 9a964bd (wip)
+
+
+
