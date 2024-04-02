@@ -12,7 +12,7 @@ provider "azurerm" {
   features {}
 }
 resource "azurerm_resource_group" "clalit-rg" {
-  name     = "example-resources"
+  name     = "clalit-exam"
   location = "West Europe"
 }
 
@@ -44,6 +44,59 @@ resource "azurerm_subnet" "endpoint" {
   enforce_private_link_endpoint_network_policies = true
 }
 
+<<<<<<< HEAD
+=======
+resource "azurerm_public_ip" "example" {
+  name                = "example-pip"
+  sku                 = "Standard"
+  location            = azurerm_resource_group.clalit-rg.location
+  resource_group_name = azurerm_resource_group.clalit-rg.name
+  allocation_method   = "Static"
+}
+
+resource "azurerm_lb" "example" {
+  name                = "example-lb"
+  sku                 = "Standard"
+  location            = azurerm_resource_group.clalit-rg.location
+  resource_group_name = azurerm_resource_group.clalit-rg.name
+
+  frontend_ip_configuration {
+    name                 = azurerm_public_ip.example.name
+    public_ip_address_id = azurerm_public_ip.example.id
+  }
+}
+
+resource "azurerm_private_link_service" "clalit-prv-lnk-svc" {
+  name                = "example-privatelink"
+  location            = azurerm_resource_group.clalit-rg.location
+  resource_group_name = azurerm_resource_group.clalit-rg.name
+
+  nat_ip_configuration {
+    name      = azurerm_public_ip.example.name
+    primary   = true
+    subnet_id = azurerm_subnet.service.id
+  }
+
+  load_balancer_frontend_ip_configuration_ids = [
+    azurerm_lb.example.frontend_ip_configuration[0].id,
+  ]
+}
+
+
+resource "azurerm_private_endpoint" "example" {
+  name                = "clalit-endpoint"
+  location            = azurerm_resource_group.clalit-rg.location
+  resource_group_name = azurerm_resource_group.clalit-rg.name
+  subnet_id           = azurerm_subnet.endpoint.id
+
+  private_service_connection {
+    name                           = "clalit-privateserviceconnection"
+    private_connection_resource_id = azurerm_private_link_service.example.id
+    is_manual_connection           = false
+  }
+}
+
+>>>>>>> 9a964bd (wip)
 resource "azurerm_storage_account" "clalit-storage-account" {
   name                     = "clalitaccount"
   resource_group_name      = azurerm_resource_group.clalit-rg.name
@@ -72,4 +125,8 @@ resource "azurerm_function_app" "example" {
   app_service_plan_id        = azurerm_app_service_plan.clalit-app-svc-plan.id
   storage_account_name       = azurerm_storage_account.clalit-storage-account.name
   storage_account_access_key = azurerm_storage_account.clalit-storage-account.primary_access_key
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9a964bd (wip)
